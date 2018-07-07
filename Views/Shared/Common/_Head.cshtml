@@ -1,0 +1,93 @@
+﻿@{
+    string _classSearch = Session["idEventList"] == null ? "search" : "filterListEventsProducts";
+}
+<div class="ui container fluid _header">
+    <div class="ui container fluid _header">
+        <div class="ui middle aligned centered grid stackable">
+            <div class="row">
+                <div class="ui center aligned five wide tablet five wide computer column mobile-hide">
+                   <h4 style="color: #9B699B; font-weight: bold;">Atendimento</h4>
+                   <h5 style="color: #9B699B; font-weight: thin;"><i class="phone icon regular"></i>(11) 2337-0685</h5>
+                </div>
+                <div class="ui center aligned sixteen wide mobile six wide tablet six wide computer column">
+                    <a href="@(Session["idEventList"] == null ? "/Home" : "#")">
+                        <img class="ui middle aligned image computer only grid tablet only grid" style="height: 65px;" src="/assets/image/logo/logo.png" alt="">
+			            <img class="ui middle aligned image small mobile only grid" src="/assets/image/logo/logo-mobile.png" alt="">
+                    </a>
+                </div>
+                <div class="ui center aligned sixteen wide mobile five wide tablet five wide computer column ">
+                    <div class="head-menu">
+                        <div class="ui relaxed horizontal divided list">
+		                    <div class="item">
+                                @if (Session["UserAuthenticated"] == null || (Convert.ToBoolean(Session["Guest"]) == true))
+                                {
+                                    <div class="item">
+                                        <a href="/customer">
+                                            <i class="user icon regular"></i>
+                                            <span class="text">Minha Conta</span>
+                                        </a>
+                                    </div>
+                                }
+                                @if ((Session["UserAuthenticated"] != null) && (Convert.ToBoolean(Session["Guest"]) == false))
+                                {
+                                    var userAuthenticated = (DomainCustomer.Entities.Customer)Session["UserAuthenticated"];
+
+                                    <div class="ui inline item dropdown pointing top right">
+                                        <div class="text regular">
+                                            <i class="user icon regular"></i>
+                                            <span class="text"><span id="userNameCommon">@userAuthenticated.Name</span></span>
+                                        </div>
+                                        <div class="menu">
+                                            <a href="/customer" class="item"><i class="options icon"></i>Minha Conta</a>
+                                            <a href="/order" class="item"><i class="shopping bag icon"></i>Meus Pedidos</a>
+                                            <a href="/customer/logout" class="item"><i class="sign out icon"></i>Sair</a>
+                                        </div>
+                                    </div>
+                                }
+
+                            </div>                    	
+                            <div class="item">
+
+                                <div class="seatchcolumn">			 
+                                    <!-- START mkwebb: styling button search -->
+                                    <div class="ui category btn-search" style="">
+                                        <a href="javascript: $('.btn-search').hide(); $('.btn-search-input').show(); $('.input-search').focus();">
+                                            <i class="search icon"> </i>
+                                        </a>
+                                    </div>
+                                    <div class="ui category @_classSearch btn-search-input" style="display:none;">
+                                        
+                                        <div class="ui inverted icon input">
+				                            <i class="search icon"></i>
+                                            <input onblur="javascript: if(this.value==''){$('.btn-search').show(); $('.btn-search-input').hide();}" class="prompt input-search" type="text" placeholder="Buscar..." autocomplete="off">                            
+                                        </div>
+                                        <div class="results"></div>
+			                        </div>
+                                    <!-- END mkwebb: styling button search -->
+                                </div>
+                            </div>
+			                <div class="item">
+			                    <a id="cartButton" class="cartbutton mini-cart" tabindex="0" data-segment="@(Session["segment"] != null ? Session["segment"] : "b2c")">
+         			                <i class="cart icon"></i>
+                                    <span class="total_itens_card">                        
+                                    @{
+                                        if (Session["EventList"] == null)
+                                        {
+                                            @Html.Action("TotalItensCart", "Checkout")
+                                        }else
+                                        {
+                                            @Html.Action("TotalItensList", "EventList")
+                                        }
+                                    }
+                                    </span>
+                        
+                		        </a>  
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

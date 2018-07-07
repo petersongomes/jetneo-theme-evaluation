@@ -1,0 +1,17 @@
+﻿
+@model IList<DomainCompany.Entities.Banner>
+@if (Model != null && Model.Any())
+{
+<div class="ui centered relaxed column grid">
+
+        @foreach (var banner in Model)
+        {
+            <div class="five wide column">
+                <a href="@banner.Link">
+                    <img href="@banner.Link" src="@banner.NameFileImage" alt="@banner.Name" class="margin none" class="ui image">
+                </a>
+            </div>
+        }
+    
+</div>
+}
